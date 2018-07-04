@@ -1,4 +1,23 @@
 # natural_product_structures
 
-This readme file is very nice
-You are cool
+Used databases:
+- GNPS (CLASS)
+- Super Natural II (CLASS)         
+- NuBBe (CLASS)
+- Human Metabolome (CLASS)
+- Yeast Metabolome (CLASS)
+- ChEBI (CLASS)
+- DrugBank (CLASS)
+- NANPDB (converted to CLASS, see python-scripts/nanpdb_CLASS_parser.py)
+- Streptomedb2 (converted to CLASS, see python-scripts/streptomedb_CLASS_parser.py))
+
+These CLASS databases are merged together in a file (Data/Structure_Database_File) with the script create_structure_db.py. The file is tab-separated and contains overlapping structures (193 944 KB). 
+
+The script python-scripts/parse_structure_db.py gives information about the number of (un)recognized and unique smiles in the Structure_Database_File. Also the number of structures that occurs multiple times is generated. 
+
+In total 477.349 structures are recognized by their SMILE. 592 structures are not recognized, 348 of those structures are empty lines which originate from NuBBe.
+
+All SMILES from the recognized structures are made uniform and converted into the canonical SMILE. Based on these canonical SMILES, the number of unique SMILES is determined, which is 312.938.
+
+The Structure_Database_File is also used to create the tables for the SQL database (see Database Design). The tables are created by the python-scripts/create_tables_NPdata_sql.py. 
+
