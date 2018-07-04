@@ -15,6 +15,7 @@ def draw_map():
     """ Creates similarity maps using the provided molecules (SMILES).
     
     """
+    
     m1 = Chem.MolFromSmiles('c1ccccc1O')
     m2 = Chem.MolFromSmiles('c1ccccc1N')
     
