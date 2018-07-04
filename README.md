@@ -3,7 +3,6 @@ The repository natural_product_structures stores data and python scripts for nat
 
 
 
-
 ## Creating the Natural Product Structure Database
 Used databases:
 - GNPS (CLASS)
