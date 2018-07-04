@@ -22,7 +22,7 @@ The script python-scripts/parse_structure_db.py gives information about the numb
 
 In total, 477.349 structures are recognized by their SMILE. 592 structures are not recognized, 348 of those structures are empty lines which originate from NuBBe.
 
-All SMILES from the recognized structures are made uniform and converted into the canonical SMILE. Based on these canonical SMILES, the number of unique SMILES is determined, which is 312.938.
+All SMILES from the recognized structures are made uniform and converted into their canonical SMILE. Based on these canonical SMILES, the number of unique SMILES is determined, which is 312.938.
 
 The Structure_Database_File is also used to create the tables for the SQL database (see Database Design). The tables are created by the python-scripts/create_tables_NPdata_sql.py. 
 
