@@ -5,7 +5,6 @@ Streptomedb CLASS parser (structure with smile 'O=C1NC(=O)c2c1c1c3ccccc3cnc1c
 1c2c2ccccc2[n-]1.CCOC(=O)C1=C(C)[CH-]C(=C1)C.C$O.[Ru+2] is removed, as it was
 not recognized). This script creates a CLASS format database for
 the streptomedb data.
-
 Command line: python3 streptomedb_CLASS_parser.py streptomedb-2try.sdf
 @author: stokm006
 """
