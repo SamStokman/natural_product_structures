@@ -4,7 +4,6 @@ Created on Tue Jun 26 11:17:39 2018
 nanpdb CLASS parser, structures 78 and 2297 are removed from the orginal db, as
 they could not be converted with their SMILE. This script creates a CLASS 
 format database for the nanpdb data.
-Command line: python3 nanpdb_CLASS_parser.py nanpdbDATAtry.txt
 Command line: python3 nanpdb_CLASS_parser.py nanpdbDATA.txt
 @author: stokm006
 """
