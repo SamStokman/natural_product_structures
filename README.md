@@ -11,7 +11,7 @@ Used databases:
 - NANPDB (converted to CLASS, see python-scripts/nanpdb_CLASS_parser.py)
 - Streptomedb2 (converted to CLASS, see python-scripts/streptomedb_CLASS_parser.py))
 
-These CLASS databases are merged together in a file (Data/Structure_Database_File) with the script create_structure_db.py. The file is tab-separated and contains overlapping structures (193 944 KB). 
+These CLASS databases are merged together in a file (Data/Structure_Database_File) with the script python-scripts/create_structure_db.py. The file is tab-separated and contains overlapping structures (193 944 KB). 
 
 The script python-scripts/parse_structure_db.py gives information about the number of (un)recognized and unique smiles in the Structure_Database_File. Also the number of structures that occurs multiple times is generated. 
 
