@@ -17,13 +17,11 @@ Used databases:
 
 These CLASS databases are merged together in a file (Data/Structure_Database_File) with the script python-scripts/create_structure_db.py. The file is tab-separated and contains overlapping structures (193 944 KB). 
 
-The script python-scripts/get_db_information.py gives information about the number of (un)recognized and unique smiles in the Structure_Database_File. Also the number of structures that occurs multiple times is generated. 
+The script python-scripts/get_db_information.py gives information about the number of (un)recognized and unique smiles in the Structure_Database_File. Also the number of structures that occurs multiple times is generated. In total, 477.349 structures are recognized by their SMILE and 244 structures are not recognized. The number of unique SMILES is 312.938.
 
-In total, 477.349 structures are recognized by their SMILE. 592 structures are not recognized, 348 of those structures are empty lines which originate from NuBBe.
+All SMILES from the recognized structures are made uniform and converted into their canonical SMILE. The structures are ordered based on these canonical SMILE and stored in Data/Canonical_db_file.txt, the script python-script/create_canonical_SMILE_db.py is used to create this file.
 
-All SMILES from the recognized structures are made uniform and converted into their canonical SMILE. Based on these canonical SMILES, the number of unique SMILES is determined, which is 312.938.
-
-The Structure_Database_File is also used to create the tables for the SQL database (see Data/DatabaseDesign). The tables are created by the python-scripts/create_tables_NPdata_sql.py. 
+The Canonical_db_file.txt file is used to create the tables for the SQL database (see Data/DatabaseDesign). The tables are created by the python-scripts/create_tables_NPdata_sql.py. 
 
 
 
