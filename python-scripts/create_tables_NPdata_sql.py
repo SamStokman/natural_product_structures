@@ -1,57 +1,31 @@
 # -*- coding: utf-8 -*-
 """
 Created on Mon Jul  2 10:46:23 2018
-Takes the information from easy NP database and creates all tables for the 
+Takes the information from canonical NP database and creates all tables for the 
 structure database which can be used in mySQL workbench.
 Command line: python3 create_tables_NPdata_sql.py Test_Structure_Database_File
-Command line: python3 create_tables_NPdata_sql.py Structure_Database_File
+Command line: python3 create_tables_NPdata_sql.py Structure_Database_File.txt
 @author: stokm006
 """
 
 from __future__ import print_function
 from sys import argv
-from rdkit import Chem
 
 def use_data(NP_data):
-    """ takes all data from the 'easy' NP database and returns a sorted list
+    """ takes all data from the canonical NP database and returns list of lists
     with the NP data.
     
-    NP_data: data from the 'easy' NP database
+    NP_data: data from the canonical NP database
     """
 
     all_lines = NP_data.split('\n')
     all_lines = all_lines[1:-1]
-
-    succes_list = []
-    fail_list = []
-
-    all_info = []
-    all_lines = all_lines
+    all_info_list = []
     for line in all_lines:
         line = line.split('\t')
-        if len(line) == 12: # for the empty lines in CLASS.txt files
-            m = Chem.MolFromSmiles(line[2])
-            m = str(m)
-            if m.startswith('<'):              
-                all_info = [line[0], line[1], line[2], line[3], line[4], line[5], \
-                line[6], line[7], line[8], line[9], line[10], line[11]]
-                succes_list += [all_info]
-            if not m.startswith('<'):
-                all_info = [line[0], line[1], line[2], line[3], line[4], line[5], \
-                line[6], line[7], line[8], line[9], line[10], line[11]]
-                fail_list += [all_info]
+        all_info_list += [line]
+    return all_info_list
 
-    all_info2 = []
-    for line in succes_list:
-        m = Chem.MolFromSmiles(line[2])
-        n = Chem.MolToSmiles(m)
-        all_info = [line[0], line[1], n, line[3], line[4], line[5], line[6],\
-        line[7], line[8], line[9], line[10], line[11]]
-        all_info2 += [all_info]
-    
-    sorted_list = sorted(all_info2, key = lambda x:(x[2]))
-    
-    return (sorted_list)
     
 def create_structure_table(all_info_list):
     """ takes all NP data and finds unique structures and adds structure iden-
@@ -75,13 +49,13 @@ def create_structure_table(all_info_list):
         if smile == line[2]:
             smile = line[2]
     
-    # create Structure_table txt file         
-    with open("/mnt/nexenta/stokm006/structure_data.txt", 'w') as db_file:
+    # create Structure_table txt file  /mnt/nexenta/stokm006/structure_data.txt"       
+    with open("structure_data.txt", 'w') as db_file:
         for key, value in structure_dict.items():
             db_file.write(str(key) + '\t')
-            for i in range(len(value)-1):
+            for i in range(len(value)-2):
                 db_file.write(str(value[i]) + '\t')
-            db_file.write(str(value[10]) + '\n')
+            db_file.write(str(value[9]) + '\n')
     
     return structure_dict2
  
@@ -148,7 +122,7 @@ def create_structure_database_table(smile_list, all_info_dict):
         = line
     
     # create Structure_Database_table txt file  
-    with open("/mnt/nexenta/stokm006/structure_database_data.txt", 'w') as db_file:
+    with open("structure_database_data.txt", 'w') as db_file:
         for key, value in structure_database_dict.items():
             db_file.write(str(key) + '\t')
             for i in range(len(value)-1):
@@ -184,7 +158,7 @@ def create_database_table(structure_database_dict):
             database_list2.append(i)
     
     # create Database_table txt file  
-    with open("/mnt/nexenta/stokm006/database_data.txt", 'w') as db_file:
+    with open("database_data.txt", 'w') as db_file:
         for i in range(len(quantity_list)):
             db_file.write(str(database_list2[i]) + '\t')
             db_file.write(str(quantity_list[i]) + '\n')
