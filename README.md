@@ -17,7 +17,7 @@ Used databases:
 
 These CLASS databases are merged together in a file (Data/Structure_Database_File) with the script python-scripts/create_structure_db.py. The file is tab-separated and contains overlapping structures (193 944 KB). 
 
-The script python-scripts/parse_structure_db.py gives information about the number of (un)recognized and unique smiles in the Structure_Database_File. Also the number of structures that occurs multiple times is generated. 
+The script python-scripts/get_db_information.py gives information about the number of (un)recognized and unique smiles in the Structure_Database_File. Also the number of structures that occurs multiple times is generated. 
 
 In total, 477.349 structures are recognized by their SMILE. 592 structures are not recognized, 348 of those structures are empty lines which originate from NuBBe.
 
