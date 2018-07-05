@@ -2,11 +2,9 @@
 
 """
 Created on Thu Jun 28 11:12:48 2018
-
-This script can be used to parse and to work with the Structure_Database_File
-from create_structure_db.py
-Command line: python3 parse_structure_db.py Test_Structure_Database_File
-Command line: python3 parse_structure_db.py Structure_Database_File
+This script can be used to get information about the database in
+Structure_Database_File.txt from create_structure_db.py
+Command line: python3 parse_structure_db.py Structure_Database_File.txt
 @author: stokm006
 """
 
@@ -55,25 +53,23 @@ def use_data(NP_data):
         line[7], line[8], line[9], line[10], line[11]]
         all_info2 += [all_info]
     
+    # the overlapping smiles are grouped together in the list
     sorted_list = sorted(all_info2, key = lambda x:(x[2]))
 
     # put the unique smile and the nr of dbs it occurs in in dict
     x = 1
-    y = 0
     
     smile = sorted_list[0][2]
     unique_smile_list = [sorted_list[0][2]]
     
     smile_dict = {}
     for line in sorted_list:
-        if smile != line[2]:
-            x += 1          
+        if smile != line[2]:          
             smile = line[2]
-            unique_smile_list += [smile]
-            y = 0
+            x = 0
         if smile == line[2]:
-            y += 1
-            smile_dict[smile] = [y]
+            x += 1
+            smile_dict[smile] = [x]
             smile = line[2]
         
     # returns a dict with smile as key and its quantity, identiefier and 
@@ -108,8 +104,8 @@ def use_data(NP_data):
             i += 1
         if value[0] > 9:
             j += 1
-    
-
+            
+    print ('Nr of unique SMILES: ', len(smile_dict))    
     print ('Nr of structures that occurs once: ', a)
     print ('Nr of structures that occurs twice: ', b)
     print ('Nr of structures that occurs three times: ', c)
