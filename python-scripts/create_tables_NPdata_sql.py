@@ -3,8 +3,7 @@
 Created on Mon Jul  2 10:46:23 2018
 Takes the information from canonical NP database and creates all tables for the 
 structure database which can be used in mySQL workbench.
-Command line: python3 create_tables_NPdata_sql.py Test_Structure_Database_File
-Command line: python3 create_tables_NPdata_sql.py Structure_Database_File.txt
+Command line: python3 create_tables_NPdata_sql.py Canonical_db_file.txt
 @author: stokm006
 """
 
@@ -49,7 +48,7 @@ def create_structure_table(all_info_list):
         if smile == line[2]:
             smile = line[2]
     
-    # create Structure_table txt file  /mnt/nexenta/stokm006/structure_data.txt"       
+    # create Structure_table txt file  /mnt/nexenta/stokm006/      
     with open("structure_data.txt", 'w') as db_file:
         for key, value in structure_dict.items():
             db_file.write(str(key) + '\t')
