@@ -12,12 +12,14 @@ Command line: python3 create_structure_db.py CLASSDATABASEFILE.txt
 from sys import argv
 import os.path
 
+
 def parse_file(input_file, db_name):
     """ takes all text from CLASS database file and returns a list of lists 
     with NPs which is easy to use
     
     input_file: CLASS database txt file
     """
+    
     all_lines = input_file.split('\n')
     all_info_list = []
     attribute_list = []
@@ -36,7 +38,17 @@ def parse_file(input_file, db_name):
     all_info_list2 = [all_info_list[1:]]
     attribute_list2 = [attribute_list[0]]
     
+    # remove empty lines, for nubbe db   
+    if db_name.startswith('nubb'):
+        all_info_list3 = [] 
+        for info_list in all_info_list2:
+            for line in info_list:
+                if len(line) > 75:
+                    all_info_list3 += [line]
+                    all_info_list2 = [all_info_list3]
+    
     return all_info_list2, attribute_list2
+
 
     
 def write_CLASS_txtfile(input_file, data, attribute_names):
@@ -63,7 +75,7 @@ if __name__ == "__main__":
         db_name = db_name[:-4]
         input_file = file_object.read()      
         parsed_data, attr_list = parse_file(input_file, db_name)
-        write_CLASS_txtfile("Structure_Database_File", parsed_data, attr_list)
+        write_CLASS_txtfile("Structure_Database_FriWedd.txt", parsed_data, attr_list)
 
 
 
