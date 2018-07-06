@@ -4,7 +4,7 @@
 Created on Thu Jun 28 11:12:48 2018
 This script can be used to get information about the database in
 Structure_Database_File.txt from create_structure_db.py
-Command line: python3 parse_structure_db.py Structure_Database_File.txt
+Command line: python3 get_db_information.py Structure_Database_File.txt
 @author: stokm006
 """
 
@@ -42,8 +42,8 @@ def use_data(NP_data):
                 fail_list += [all_info]
 
     # whether the smile is recognized by RDkit
-    print ('nr of recognized structures: ', x)
-    print ('nr of unrecognized structures :', y)
+    print ('Nr of recognized structures: ', x)
+    print ('Nr of unrecognized structures: ', y)
     
     all_info2 = []
     for line in succes_list:
