@@ -21,12 +21,12 @@ def generate_substructures():
     """
     
     # Create textfile 
-    with open("/mnt/scratch/stokm006/generate_substructures/structure_substructure_per_class_table.txt", 'w') as db_file:
+    with open("/path/to/data/file/structure_substructure_per_class_table.txt", 'w') as db_file:
          db_file.write("Class"+'\t'+"Structure"+'\t'+"Substructure"+'\t'+\
                        "Nr of substructures matches in structure" + '\n\n')
 
     # Connect to SQlite database
-    conn = sqlite3.connect("/mnt/nexenta/stokm006/Natural_Product_Structure.sqlite")
+    conn = sqlite3.connect("/path/tpSQLiteDatabase/Natural_Product_Structure.sqlite")
     c = conn.cursor()
     
     # Generate the nr of structures present in the SQLite database
@@ -98,7 +98,7 @@ def generate_substructures():
                 sub_mol_list += [sm]
 
         # Add (sub)structure data per class to text file 
-        with open("/mnt/scratch/stokm006/generate_substructures/structure_substructure_per_class_table.txt", 'a') as db_file:
+        with open("/path/to/data/file/structure_substructure_per_class_table.txt", 'a') as db_file:
             for structure in str_mol_list:
                 structure = structure[1]
                 for substructure in sub_mol_list:
