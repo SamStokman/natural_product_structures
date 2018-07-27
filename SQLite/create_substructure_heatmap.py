@@ -3,7 +3,7 @@
 """
 Created on Mon Jul 16 14:34:43 2018
 Creates a similarity heatmap with substructures from class XXX generated with
-generate_data_for_vector.py
+generate_sub_data.py
 Command line: python3 create_substructure_heatmap.py /mnt/nexenta/stokm006/class_Akua_str_sub.txt
 @author: stokm006
 """
