@@ -3,7 +3,7 @@
 """
 Created on Mon Jul 23 14:10:10 2018
 Creates a histogram with substructures from class XXX generated with
-generate_data_for_vector.py. (x: molecule size, y: substructure frequency)
+generate_sub_data.py. (x: molecule size, y: substructure frequency)
 Command line: python3 create_size_frequency_histogram.py /mnt/nexenta/stokm006/class_Akua_str_sub.txt
 @author: stokm006
 """
@@ -14,7 +14,7 @@ import matplotlib.pyplot as plt
 from sys import argv
 
 def create_histogram(data_input):
-    """ Uses the data created with generate_data_for_vector.py and creates a
+    """ Uses the data created with generate_sub_data.py and creates a
     histogram (substructure frequency vs. molecule size).
     
     data_input: txt file from generate_data_for_vector.py
