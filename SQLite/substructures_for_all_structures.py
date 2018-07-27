@@ -79,7 +79,7 @@ def generate_substructures():
         
     # Create textfile 
     with open("/path/to/data/file/structure_substructure_table.txt", 'w') as db_file:
-        db_file.write("Structure"+'\t'+"Substructure"+'\t'+\
+        db_file.write("Class"+'\t'+"Structure"+'\t'+"Substructure"+'\t'+\
                       "Nr of substructures matches in structure"+'\n\n')
         for i, structure in enumerate(str_mol_list):
             for substructure in sub_mol_list:
