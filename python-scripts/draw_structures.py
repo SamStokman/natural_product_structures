@@ -4,7 +4,7 @@
 Created on Thu Jul 26 12:11:51 2018
 This script generates substructures from a given structure and draws them in a
 png file.
-Command line: python3 draw_substuctures.py 
+Command line: python3 draw_stuctures.py 
 @author: stokm006
 """
 
@@ -74,7 +74,7 @@ def draw_substruc():
              
     # Draw and save (sub)structures
     multiple_molecules = Draw.MolsToGridImage(sub_list,molsPerRow=5,subImgSize=(200,100))
-    multiple_molecules.save('/mnt/scratch/stokm006/generate_substructures/Simocyclinone_substructures.png')
+    multiple_molecules.save('/path/to/store/image.png')
 
 
 if __name__ == '__main__':
