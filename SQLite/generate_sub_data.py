@@ -4,7 +4,7 @@
 Created on Mon Jul 23 13:30:28 2018
 Generates all substructures per class, and for that class, it creates the 
 junction table (structure_has_substructure table).
-Command line: python3 generate_vector_data.py
+Command line: python3 generate_sub_data.py
 @author: stokm006
 """
 
