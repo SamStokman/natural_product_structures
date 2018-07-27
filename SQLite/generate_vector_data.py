@@ -19,7 +19,7 @@ def generate_substructures():
     """
 
     # Connect
-    conn = sqlite3.connect("/mnt/nexenta/stokm006/Natural_Product_Structure.sqlite")
+    conn = sqlite3.connect("/path/to/SQLiteDatabase/Natural_Product_Structure.sqlite")
     c = conn.cursor()
     
     # Generate the nr of structures for class XXX
