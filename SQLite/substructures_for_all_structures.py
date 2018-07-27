@@ -20,7 +20,7 @@ def generate_substructures():
     """
 
     # Connect to SQlite database
-    conn = sqlite3.connect("/mnt/nexenta/stokm006/Natural_Product_Structure.sqlite")
+    conn = sqlite3.connect("/path/to/SQLiteDatabase/Natural_Product_Structure.sqlite")
     c = conn.cursor()
     
     # Generate the nr of structures present in the SQLite database
@@ -78,7 +78,7 @@ def generate_substructures():
             sub_mol_list += [sm]
         
     # Create textfile 
-    with open("/mnt/scratch/stokm006/generate_substructures/structure_substructure_table.txt", 'w') as db_file:
+    with open("/path/to/data/file/structure_substructure_table.txt", 'w') as db_file:
         db_file.write("Structure"+'\t'+"Substructure"+'\t'+\
                       "Nr of substructures matches in structure"+'\n\n')
         for i, structure in enumerate(str_mol_list):
