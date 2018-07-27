@@ -3,7 +3,7 @@
 """
 Created on Mon Jul 23 15:08:28 2018
 Make a vector array for a class (x: substructure, y:structures). This vector
-array can be visualized with a heatmap.(see generate_data_for_vector.py)
+array can be visualized with a heatmap.(see generate_sub_data.py)
 Command line: python3 create_vector.py /mnt/nexenta/stokm006/Akua_str_sub.txt
 @author: stokm006
 """
@@ -17,7 +17,7 @@ import matplotlib.pyplot as plt
 
 
 def vector(data_input):
-    """ Uses the data created with generate_data_for_vector.py and creates a
+    """ Uses the data created with generate_sub_data.py and creates a
     vector (0/1) and a heatmap.
     
     data_input: txt file from generate_data_for_vector.py
