@@ -71,6 +71,6 @@ if __name__ == "__main__":
     plt.setp(ax.get_xticklabels(), rotation=90, ha="right", rotation_mode="anchor")
     plt.xlabel('Substructure')
     plt.ylabel('Substructure')
-    fig.savefig('/mnt/scratch/stokm006/SQLite/Akuammilan_sub_Heatmap.png')
- #   plt.show()
+    fig.savefig('/path/to/save/sub_Heatmap.png')
+ #   plt.show() # shows the plot without saving
 
