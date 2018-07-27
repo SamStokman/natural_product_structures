@@ -3,7 +3,7 @@
 """
 Created on Thu Jul 26 14:37:51 2018
 Norine CLASS parser which creates a CLASS format database for the Norine data.
-Command line: python3 parse_norine.py NORINE.txt
+Command line: python3 norine_CLASS_parser.py NORINE.txt
 @author: stokm006
 """
 from __future__ import print_function
