@@ -4,7 +4,7 @@
 Created on Thu Jul 26 13:41:03 2018
 NPAtlas CLASS parser which creates a CLASS format database for the NPAtlas data.
 this script parses the NPAtlas_DB into the uniform CLASS one.
-Command line: python3 parse_NPAtlas.py NPAtlas_DB_last_version.tsv
+Command line: python3 NPAtlas_CLASS_parser.py NPAtlas_DB_last_version.tsv
 @author: stokm006
 """
 from __future__ import print_function
