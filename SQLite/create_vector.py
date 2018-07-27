@@ -43,8 +43,8 @@ def vector(data_input):
             sm = Chem.MolToSmiles(sm)
             sub_smiles_list += [sm]
          
-     # Connect
-    conn = sqlite3.connect("/mnt/nexenta/stokm006/Natural_Product_Structure.sqlite")
+    # Connect to SQLite database
+    conn = sqlite3.connect("/path/to/SQLiteDatabse/Natural_Product_Structure.sqlite")
     c = conn.cursor()
     
     # Generate the nr of structures for class XXX
@@ -94,7 +94,7 @@ def vector(data_input):
     fig.set_size_inches(340, 4)
     fig.grid(which="minor", color="w", linestyle='-', linewidth=33)
     plt.colorbar(heatmap)
-    fig.savefig('~/thesis/NPdatabase/SQLite/FlavonoidHeatmap.png')
+    fig.savefig('/path/to/store/vectorHeatmap.png')
     plt.show()
 
 if __name__ == "__main__":
