@@ -16,7 +16,6 @@ import sqlite3
 def parse_data(input_file, db_name):
     """ takes all text from pre generated database file and returns an easy to 
     use list of lists with all structure data
-
     
     input_file: pre generated data txt file from generate_new_structure_data.py
     """
@@ -250,7 +249,7 @@ def source_table(source_dict):
     input_file: new_source_dict from generate_data_source_table_data()
     """
      
-    # if source_name is already in the data_source table, then the row that 
+    # If source_name is already in the data_source table, then the row that 
     # contains that data needs to be deleted first. The statements for deletion
     # are stored in the delete list.
     delete_list = [] 
