@@ -2,61 +2,38 @@
 # -*- coding: utf-8 -*-
 """
 Created on Fri Aug 31 09:08:53 2018
-Script to add new structures to the NP SQlite database.
+Script to add new structures to the NP SQlite database. The input data txt file
+(example_database_with_generated_data.txt) has to be generated first with
+generate_new_structure_data.py
 Command line: python3 add_new_structures.py dummy_data_CLASS.txt
 @author: stokm006
 """
 
 from sys import argv
-from rdkit import Chem
 import sqlite3
 
-def canonical_smile(input_file, db_name):
-    """ takes all text from CLASS database file and returns a list of lists 
-    with NPs with their canonical smiles
+
+def parse_data(input_file, db_name):
+    """ takes all text from pre generated database file and returns an easy to 
+    use list of lists with all structure data
+
     
-    input_file: CLASS database txt file
+    input_file: pre generated data txt file from generate_new_structure_data.py
     """
-    
-    # Remove quotation marks and replaces empty data for "NA"
+
     all_lines = input_file.split('\n')
+    if all_lines[-1] == '':
+        all_lines = all_lines[:-1]
+    
     all_info_list = []
-    attribute_list = []
     for line in all_lines:
         line = line.split('\t')
-        info_per_row_string = ""
-        for value in line:
-            my_string = ""
-            value = value.strip('\'"')
-            if len(value) == 0:
-                value = "NA"
-            my_string += value
-            info_per_row_string += my_string+'\t'
-        all_info_list += [info_per_row_string+db_name]
-        attribute_list += [info_per_row_string]
-    all_info_list2 = [all_info_list[1:]]
-
-
-    # Convert smiles to canonical smiles
-    success_list = []
-    for all_lines in all_info_list2:
-        for line in all_lines:
-            line = line.split('\t')
-            if len(line) == 12:
-                smile = line[2]
-                smile = Chem.MolFromSmiles(smile)
-                canonical_smile = Chem.MolToSmiles(smile)
-                smile = str(smile)
-                if smile.startswith('<'):              
-                    all_info = [line[0], line[1], canonical_smile, line[3],\
-                                line[4], line[5], line[6], line[7], line[8],\
-                                line[9], line[10], line[11]]
-                    success_list += [all_info]
+        line.insert(len(line), db_name)
+        all_info_list += [line]
     
-    sorted_list = sorted(success_list, key = lambda x:(x[2]))
-    
-    return sorted_list
-    
+    all_info_list = sorted(all_info_list, key = lambda x:(x[2]))
+        
+    return all_info_list    
 
 def generate_structure_table_data(data):
     """ Checks whether the structure is already present in the structure table.
@@ -64,32 +41,33 @@ def generate_structure_table_data(data):
     If not present; a new structure_id will be created
     A dictionary with all structure data will be returned
     
-    input_file: structure data list created with canonical_smile()
+    input_file: structure data list created with parse_data()
     """
     
-    # Connect
+    # Connect to sqlite database
     conn = sqlite3.connect("/mnt/nexenta/stokm006/Natural_Product_Structure.sqlite")
     c = conn.cursor()
     
+    # Retrieve all smiles and structure_id's from sqlite database
     c.execute('SELECT * from structure')
     smiles_sqlite_list = []
     structure_id_sqlite_list = []
-    
     for row in c:
         smiles_sqlite_list += [row[3]]
         structure_id_sqlite_list += [row[0]]
     
+    # For structure_id's: delete "NP_" and only keep the nr
     structure_id_list = []
     for structure_id in structure_id_sqlite_list:
         structure_id_list += [int(structure_id[6:])] #for updated database this must be 3
     
-    
-    new_structure_dict = {}  # for structure table
-    
+    # Get the highest structure_id nr    
     structure_id_nr = max(structure_id_list)
-
+    
+    # Dictionary that temporarily stores the structure table data
+    new_structure_dict = {}  
     for line in data:
-        # if structure already in database, get stucture_id:
+        # If structure already in database, retrieve stucture_id:
         if line[2] in smiles_sqlite_list:
             get_structure_id = 'SELECT structure_id from structure where smile = "%s";'% (line[2])
             c.execute(get_structure_id)
@@ -103,10 +81,10 @@ def generate_structure_table_data(data):
                                    line[6], line[7], line[8], line[9],\
                                    line[10], line[11]]
 
-        # if structure not yet in database, create new structue_id
+        # If structure not yet in database, create new structue_id
         if line[2] not in smiles_sqlite_list:
             structure_id_nr = structure_id_nr+1
-            new_structure_id = 'NP_ID_{}'.format(structure_id_nr)
+            new_structure_id = 'NP_ID_{}'.format(structure_id_nr) #for updated database this must be "NP_{}"
             new_structure_dict[new_structure_id] = [line[0], line[1], line[2],\
                                line[3], line[4], line[5], line[6], line[7],\
                                line[8], line[9], line[10], line[11]]
@@ -130,7 +108,10 @@ def structure_table(structure_dict, structure_id_nr):
     sql_list = [] 
     for key, value in structure_dict.items():
         key = int(key.lstrip('NP_ID_'))
-        if key > structure_id_nr: # for new structures
+        
+        # If the structure is not present in the database yet, a statement will 
+        # be created with all data (including new structure_id)
+        if key > structure_id_nr:
             value9 = value[9].replace("'", "")
             value10 = value[10].replace("'", "")
             sql_string = "INSERT INTO structure VALUES ('%s', '%s', '%s',\
@@ -140,7 +121,7 @@ def structure_table(structure_dict, structure_id_nr):
             sql_list += [sql_string]
 
         
-    # Add data to table
+    # Add new structure data to structure table
     for i in range(len(sql_list)):
         c.execute(sql_list[i])
    
@@ -156,6 +137,12 @@ def generate_structure_has_source_table_data(new_structure_dict):
     if source_id is already in the db nothing happens
     if source_id is unknown a new structures-data source combination is created
     returns a dict
+    
+    source_id = data source identifier given by the external database where the
+    new structure data is retrieved from (e.g. Super Natural II).
+    structure_source_id = a number that represents a structure and data source 
+    combination which will be used as primary key in the 
+    structure_has_data_source table.
         
     input_file: new_structure_dict from generate_structure_table_data()
     """
@@ -164,6 +151,7 @@ def generate_structure_has_source_table_data(new_structure_dict):
     conn = sqlite3.connect("/mnt/nexenta/stokm006/Natural_Product_Structure.sqlite")
     c = conn.cursor()
     
+    # Retrieve all structure_source_id's and source_id's from sqlite database
     c.execute('SELECT * from structure_has_data_source')
     structure_source_id_sqlite_list = []
     source_id_list = []
@@ -172,14 +160,17 @@ def generate_structure_has_source_table_data(new_structure_dict):
         structure_source_id_sqlite_list += [row[0]]
         source_id_list += [row[2]]
     
-        
+    # Get the highest structure_source_id nr       
     structure_source_id_list = []
     for structure_source_id in structure_source_id_sqlite_list:
         structure_source_id_list += [int(structure_source_id[9:])] #for updated database this must be 7
     structure_source_id_nr = max(structure_source_id_list)
     
+    # Dictionary that temporarily stores the structure_has_data_source table data
     new_structure_source_dict = {}
-    for key, value in new_structure_dict.items(): # create new structure-source combo if source_id does not exist yet
+    # If source_id not yet in sqlite database, a new structure_source_id is 
+    # created
+    for key, value in new_structure_dict.items(): 
         if value[3] not in source_id_list:
             structure_source_id_nr = structure_source_id_nr+1
             new_structure_source_id = 'NP_BD_ID_{}'.format(structure_source_id_nr) # for updated database NP_SRC_
@@ -189,15 +180,15 @@ def generate_structure_has_source_table_data(new_structure_dict):
 
 
 def structure_source_table(structure_source_dict): 
-    """ adds the new structures to the structure source table if the structure is not
-    yet present in the structure source table. 
+    """ adds the new structures to the structure_has_data_source table if the 
+    source_id is not yet present in the structure source table. 
         
     input_file: new_structure_source_dict from generate_structure_has_source_table_data()
     """
    
+    # Statements with all structure_has_data_source data will be created
     sql_list = [] 
     for key, value in structure_source_dict.items():
-
         sql_string = "INSERT INTO structure_has_data_source VALUES\
         ('%s','%s', '%s', '%s');"% (key, value[0], value[1], value[2])
         sql_list += [sql_string] 
@@ -207,7 +198,7 @@ def structure_source_table(structure_source_dict):
     conn = sqlite3.connect("/mnt/nexenta/stokm006/Natural_Product_Structure.sqlite")
     c = conn.cursor()
     
-    # Add data to table
+    # Add new data to structure_has_data_source table
     for i in range(len(sql_list)):
         c.execute(sql_list[i])
    
@@ -227,18 +218,17 @@ def generate_data_source_table_data():
     conn = sqlite3.connect("/mnt/nexenta/stokm006/Natural_Product_Structure.sqlite")
     c = conn.cursor()
     
+    # Retrieve all source_names from structure_has_data_source table    
     c.execute('SELECT * from structure_has_data_source')
-    
-    
     source_name_list = []
-    
     for row in c:
         source_name_list += [row[3]]
     
     source_name_list_sorted = sorted(source_name_list)
-
     source_name = source_name_list_sorted[0]
 
+    # Count all structures per data source and create a dictionary with that
+    # information
     x = 0
     source_dict= {}
     source_dict[source_name] = [1]    
@@ -254,24 +244,30 @@ def generate_data_source_table_data():
 
     
 def source_table(source_dict):
-    """ adds the new database and nr of structures or updates the nr of 
-    stuctures in the source.. 
+    """ adds the new database name and nr of structures or updates the nr of 
+    stuctures in the data_source table.
         
     input_file: new_source_dict from generate_data_source_table_data()
     """
+     
+    # if source_name is already in the data_source table, then the row that 
+    # contains that data needs to be deleted first. The statements for deletion
+    # are stored in the delete list.
+    delete_list = [] 
+    #  List for statements for all data_source data
     sql_list = [] 
-    delete_list = []
     for key, value in source_dict.items():
-        sql_string = "INSERT INTO data_source VALUES ('%s', %s);"% (key, str(value))
-        sql_list += [sql_string]
         delete_string = "DELETE from data_source where source_name = ('%s');"% (key)
         delete_list +=  [delete_string]
+        sql_string = "INSERT INTO data_source VALUES ('%s', %s);"% (key, str(value))
+        sql_list += [sql_string]
+
 
     # Connect
     conn = sqlite3.connect("/mnt/nexenta/stokm006/Natural_Product_Structure.sqlite")
     c = conn.cursor()
     
-    # Remove and add data to table
+    # Remove data from and add data to data_source table
     for i in range(len(sql_list)):
       c.execute(delete_list[i]) 
       c.execute(sql_list[i])
@@ -286,9 +282,9 @@ def source_table(source_dict):
 if __name__ == "__main__":
     with open(argv[1]) as file_object:
         db_name = argv[1]
-        db_name = db_name[:-4]
+        db_name = db_name[:-24]
         input_file = file_object.read()
-        data = canonical_smile(input_file, db_name)
+        data = parse_data(input_file, db_name)
         # For structure table
         structure_dict, structure_id_nr = generate_structure_table_data(data)
         structure_table(structure_dict, structure_id_nr)
