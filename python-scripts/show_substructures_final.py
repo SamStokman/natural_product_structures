@@ -50,7 +50,6 @@ def visualize_substructures(input_data, result_data, structure_nr, boolean):
         output_list = []
         for i in range(len(smile)):
             smile_str = smile[i]
-         #   smile_str =  smile_str.replace('-', '')   # For some struct more subs are shown where the '-' is deleted
             output_list += [smile_str]
         mol_result_list = []
         for smile in output_list:
