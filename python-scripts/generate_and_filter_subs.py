@@ -252,10 +252,9 @@ def filter2(filter1_dict):
          #      print ('nr. of Bs   ',B_count)
          #      print ('nr. of Zrs   ',Zr_count)
          #      print ('nr. of Fls   ',F_count)
-
-               if n_count >= 1 or o_count >= 1 or Cl_count >= 1 or \    # adjust these
+               if n_count >= 1 or o_count >= 1 or Cl_count >= 1 or \
                F_count >= 1 or Br_count >= 1 or I_count >= 1 or At_count >= 1 \
-               or B_count >= 1 or Zr_count >= 1 or c_count >= 1:  
+               or B_count >= 1 or Zr_count >= 1 or c_count >= 1:  # adjust these
                     if structure_id in filter2_dict:
                             filter2_dict[structure_id].append(smile)
                     if structure_id not in filter2_dict:
