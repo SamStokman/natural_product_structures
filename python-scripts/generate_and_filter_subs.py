@@ -3,7 +3,7 @@
 """
 Created on Fri Nov  2 11:00:54 2018
 Script that first generated all possible substructures out of the input
-structures and then filters the substructures on mol weigth, presence of hetero
+structures and then filters the substructures on mol weight, presence of hetero
 atoms, nr of rings in the substructure, abundancy and nr of the bonds which
 are connected to the structure.
 
@@ -133,7 +133,7 @@ def generate_substructures(input_file, create_files):
 
 def filter1(substructure_dict):
     """ takes all text from dictionary with the substructures and returns a 
-    dictionary with substructures which are filtered based on mol weigth.
+    dictionary with substructures which are filtered based on mol weight.
   
     substructure_dict: dict with substructures and structure identifier
     """
@@ -143,8 +143,8 @@ def filter1(substructure_dict):
         for smile in values:
             if smile != '<NA>':
                 sub_mol = Chem.MolFromSmiles(smile)
-                mol_weigth = Descriptors.ExactMolWt(sub_mol)
-                if mol_weigth > 40:    # adjust this value
+                mol_weight = Descriptors.ExactMolWt(sub_mol)
+                if mol_weight > 40:    # adjust this value
                     if structure_id in filter1_dict:
                             filter1_dict[structure_id].append(smile)
                     if structure_id not in filter1_dict:
