@@ -19,7 +19,7 @@ def visualize_substructures(input_file, result_data, structure_nr, method):
     This function visualizes substructures for quick and easy substructure
     evaluation.
         
-    input_data: input text file with structures' SMILES and structure_id's
+    input_file: input text file with structures' SMILES and structure_id's
     result_data: output text file with substructures' SMILES and original
     structure's id
     structure_nr: the structure's number which substructures should be shown
