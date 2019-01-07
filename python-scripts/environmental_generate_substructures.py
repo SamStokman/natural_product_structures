@@ -420,17 +420,17 @@ def main(argv):
     try:
         opts, args = getopt.getopt(argv,"i:m:h:r:a:b:")
         if len(opts) != 6:
-           print ('You did not enter the right argument')
+           print ('You did not enter the correct argument')
            sys.exit(2)
         opt_list = []
         for opt, arg in opts:
            if opt not in opt_list:
                opt_list += [opt]
         if '-i' not in opt_list or '-m' not in opt_list or '-h' not in opt_list or '-r' not in opt_list or '-a' not in opt_list or '-b' not in opt_list:
-           print ('You did not enter the right arguments')
+           print ('You did not enter the correct arguments')
            sys.exit(2)      
     except getopt.GetoptError:
-        print ('You did not enter the right arguments')
+        print ('You did not enter the correct arguments')
         sys.exit(2)
       
     for opt, arg in opts:
