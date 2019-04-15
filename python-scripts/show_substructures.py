@@ -1,7 +1,7 @@
 """
 Created on Mon Sep 10 09:11:22 2018
 This script shows the highlighted substructure, which requires the structure
-input and substrucutre output.
+input and substructure output.
 Command line: python3 show_substructures.py -i [input file] -o [output_file] -s [structure nr] -m [method of substructure showing]
 @author: stokm006
 """
