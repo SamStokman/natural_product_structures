@@ -2,7 +2,15 @@
 Created on Mon Sep 10 09:11:22 2018
 This script shows the highlighted substructure, which requires the structure
 input and substructure output.
+
+Usage:
 Command line: python3 show_substructures.py -i [input file] -o [output_file] -s [structure nr] -m [method of substructure showing]
+-s: int, 0 - nr. of input structures, ascending order.
+-m: n = show the substructures.
+    y = show the unique substructure with the whole structure as background, for each substructure, one match is shown.
+    a = show the substructures with the whole structure as backgroud, all substructure matches are shown.
+
+
 @author: stokm006
 """
 
